@@ -1,44 +1,31 @@
-juypter:
-	@cd notebooks; PYTHONPATH=".." jupyter notebook api.ipynb
+## The Makefile includes instructions on environment setup and lint tests
+# Create and activate a virtual environment
+# Install dependencies in requirements.txt
+# Dockerfile should pass hadolint
+# app.py should pass pylint
+# (Optional) Build a simple integration test
 
 setup:
-	python3 -m venv ~/.pia-aws
-
-env:
-	#Show information about environment
-	which python3
-	python3 --version
-	which pytest
-	which pylint
-
-lint:
-	pylint --load-plugins pylint_flask --disable=R,C flask_app/*.py nlib csvcli
-
-lint-circleci:                                                              
-	pylint --output-format=parseable --load-plugins pylint_flask --disable=R,C flask_app/*.py nlib csvcli > $$CIRCLE_ARTIFACTS/pylint.html  
-
-test-circleci:
-	@cd tests; pytest -vv --cov-report html:$$CIRCLE_ARTIFACTS --cov=web --cov=nlib test_*.py  
-
-test:
-	@cd tests; pytest -vv --cov-report term-missing --cov=web --cov=nlib test_*.py
+	# Create python virtualenv & source it
+	# source ~/.devops/bin/activate
+	python3 -m venv ~/.devops
 
 install:
-	pip install -r requirements.txt 
+	# This should be run from inside a virtualenv
+	pip install --upgrade pip &&\
+		pip install -r requirements.txt
 
-validate-csv:
-	#Binary found here:  https://github.com/Clever/csvlint
-	csvlint ext/input.csv
+test:
+	# Additional, optional, tests could go here
+	#python -m pytest -vv --cov=myrepolib tests/*.py
+	#python -m pytest --nbval notebook.ipynb
 
-start-api:
-	#sets PYTHONPATH to directory above, would do differently in production
-	cd flask_app && PYTHONPATH=".." python web.py
-
-benchmark-web-sum:
-	#very simple benchmark of api on sum operations
-	ab -n 1000 -c 100 -T 'application/json' -u ext/input_base64.txt http://0.0.0.0:5001/api/npsum\?column=count\&group_by=last_name
-
-profile:
-	python3 -m cProfile -s cumtime ./csvcli.py cvsops --file ext/input.csv --groupby last_name --applyname count --func npmedian | less
+lint:
+	# See local hadolint install instructions:   https://github.com/hadolint/hadolint
+	# This is linter for Dockerfiles
+	hadolint Dockerfile
+	# This is a linter for Python source code linter: https://www.pylint.org/
+	# This should be run from inside a virtualenv
+	pylint --disable=R,C,W1203 app.py
 
 all: install lint test
