@@ -15,18 +15,18 @@ Your project goal is to operationalize this working, machine learning `a pre-tra
 ## Pre-Requisites to Run Locally
 
 * Install Hadolint to lint Dockerfiles
-    1. wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64
-    2. sudo chmod +x /bin/hadolint
+  * wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64
+  * sudo chmod +x /bin/hadolint
 * Install Docker Engine
 * Install K8S Cluster "Use Minikube for Simplifications"
 
 ## Setup the Environment
 
 * Clone the Project using 
-    1. git clone https://github.com/MuhammadYasser2019/DevOps_Microservices.git
+  * git clone https://github.com/MuhammadYasser2019/DevOps_Microservices.git
 * Create a virtualenv and activate it
-    1. python3 -m venv venv
-    2. . venv/bin/activate
+  * python3 -m venv venv
+  * . venv/bin/activate
 * Change directory to be under DevOps_Microservices 
 * Run `make install` to install the necessary dependencies
 
