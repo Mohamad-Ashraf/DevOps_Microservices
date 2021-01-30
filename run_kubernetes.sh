@@ -15,8 +15,8 @@ kubectl run --image=$dockerpath --port=9000 --generator=run-pod/v1 python -n pro
 # Step 3:
 # List kubernetes pods
 kubectl get pods -n project
-kubectl describe pod python -n project
-kubectl logs python -n project
+# kubectl describe pod python -n project
+# kubectl logs python -n project
 
 # Step 4:
 # Forward the container port to a host
