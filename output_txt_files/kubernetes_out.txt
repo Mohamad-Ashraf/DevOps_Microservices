@@ -1,1 +1,95 @@
-<paste log output from Kubernetes-mediated prediction, here>
+C:\Users\Muhammad Yasser\Desktop>kubectl port-forward python 8000:9000
+
+Forwarding from 127.0.0.1:8000 -> 9000
+Forwarding from [::1]:8000 -> 9000
+Handling connection for 8000
+Handling connection for 8000
+Handling connection for 8000
+Handling connection for 8000
+Handling connection for 8000
+Handling connection for 8000
+
+
+
+
+
+
+
+muhammad@Muhammad-Yasser:~$ kubectl.exe logs -f python
+
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:9000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 294-655-389
+127.0.0.1 - - [30/Jan/2021 17:01:41] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2021 17:01:49] "GET / HTTP/1.1" 200 -
+[2021-01-30 17:03:05,494] INFO in app: JSON payload:
+{'CHAS': {'0': 0}, 'RM': {'0': 6.575}, 'TAX': {'0': 296.0}, 'PTRATIO': {'0': 15.3}, 'B': {'0': 396.9}, 'LSTAT': {'0': 4.98}}
+[2021-01-30 17:03:05,513] INFO in app: Inference payload DataFrame:
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2021-01-30 17:03:05,523] INFO in app: Scaling Payload:
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2021-01-30 17:03:05,527] INFO in app: Prediction:
+[20.35373177134412]
+127.0.0.1 - - [30/Jan/2021 17:03:05] "POST /predict HTTP/1.1" 200 -
+
+
+
+
+C:\Users\Muhammad Yasser>kubectl describe pod python
+
+Name:         python
+Namespace:    default
+Priority:     0
+Node:         minikube/192.168.217.3
+Start Time:   Sat, 30 Jan 2021 18:49:01 +0200
+Labels:       run=python
+Annotations:  <none>
+Status:       Running
+IP:           172.17.0.5
+IPs:
+  IP:  172.17.0.5
+Containers:
+  python:
+    Container ID:   docker://1125ac20546d0727b25e80f71b3eb181bd97a3c9d384068134d4afb22c38d41e
+    Image:          muhammadyasser/python-proj:latest
+    Image ID:       docker-pullable://muhammadyasser/python-proj@sha256:520151d7fd1326821a6d124fd748077fbc3547e0d89a9d90e795eed84bddb7d9
+    Port:           9000/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 30 Jan 2021 18:49:04 +0200
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-kftqs (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  default-token-kftqs:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-kftqs
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  15m   default-scheduler  Successfully assigned default/python to minikube
+  Normal  Pulling    15m   kubelet            Pulling image "muhammadyasser/python-proj:latest"
+  Normal  Pulled     15m   kubelet            Successfully pulled image "muhammadyasser/python-proj:latest" in 2.400685782s
+  Normal  Created    15m   kubelet            Created container python
+  Normal  Started    15m   kubelet            Started container python
