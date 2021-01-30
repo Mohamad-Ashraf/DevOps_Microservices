@@ -12,4 +12,4 @@ docker images
 
 # Step 3: 
 # Run flask app
-docker run -dt python-proj:latest -p 9100:9000
+docker run -p 9100:9000 -dt python-proj:latest 
