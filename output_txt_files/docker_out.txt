@@ -37,3 +37,6 @@
 [2021-01-30 09:12:59,774] INFO in app: Prediction: 
 [20.35373177134412]
 172.17.0.1 - - [30/Jan/2021 09:12:59] "POST /predict HTTP/1.1" 200 -
+
+
+This was the output
